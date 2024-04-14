@@ -4,9 +4,6 @@ import (
 	"bytes"
 	"encoding/binary"
 	"net"
-
-
-	"github.com/cespare/xxhash"
 )
 
 type Udpdata struct {
@@ -16,11 +13,11 @@ type Udpdata struct {
 	Data    []byte
 }
 
-func (u *Udpdata) ID() uint64 {
+func (u *Udpdata) ID() [6]byte {
 	var b []byte
 	b = binary.LittleEndian.AppendUint16(b, u.DstPort)
 	b = append(b, u.DstIP.To4()...)
-	return xxhash.Sum64(b)
+	return [6]byte(b)
 }
 
 func (u *Udpdata) Marshal() []byte {
@@ -39,7 +36,6 @@ func NewUdpData(ip net.Addr, data []byte) (*Udpdata, error) {
 	if err != nil {
 		return nil, err
 	}
-	
 	resp := Udpdata{
 		DstIP:   newIp.IP,
 		DstPort: uint16(newIp.Port),

@@ -95,6 +95,9 @@ func (c *UdpConn) ServerNormalSend(deadlineTime time.Duration) {
 	for {
 		select {
 		case v := <-c.DataChan:
+			if v == nil {
+				return
+			}
 			c.Conn.WriteTo(v.Data, nil, Dst)
 			deadliner.Reset(deadlineTime)
 		case <-deadliner.C:

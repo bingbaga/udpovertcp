@@ -7,13 +7,13 @@ import (
 	"golang.org/x/net/ipv4"
 )
 
-var IdForchanMap map[[6]byte]chan *Udpdata
+var IdForchanMap map[[6]byte]*UdpConn
 var MessagePool sync.Pool
 var DataListPool sync.Pool
 var Dst *net.UDPAddr
 
 func init() {
-	IdForchanMap = make(map[[6]byte]chan *Udpdata, 100)
+	IdForchanMap = make(map[[6]byte]*UdpConn, 100)
 	MessagePool.New = func() any {
 		temp := make([]ipv4.Message, 35)
 		for i := 0; i < 35; i++ {

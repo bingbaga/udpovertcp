@@ -128,8 +128,10 @@ func (t *Tcp) ReadtoStruct() ([]*Udpdata, error) {
 	}
 	return structList, nil
 }
-func (t *Tcp) Close() error {
-	return t.conn.Close()
+func (t *Tcp) Close() {
+	close(t.SendChan)
+	close(t.SendListChan)
+	return
 }
 func (t *Tcp) StructToWrite(list []*Udpdata) (n int, err error) {
 	var dataLenght int
