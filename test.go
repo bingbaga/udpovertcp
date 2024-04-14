@@ -120,12 +120,6 @@ func handleRead(conn *udp.Tcp) {
 
 }
 func server(localIP, remoteIP string) {
-	// fmt.Println("start---------------")
-	// cert, err := tls.LoadX509KeyPair("/root/.acme.sh/lbtest.top_ecc/fullchain.cer", "/root/.acme.sh/lbtest.top_ecc/lbtest.top.key")
-	// c := &tls.Config{Certificates: []tls.Certificate{cert},
-	// 	SessionTicketsDisabled: false,
-	// 	ClientSessionCache:     tls.NewLRUClientSessionCache(10),
-	// }
 
 	l, err := net.Listen("tcp", localIP)
 	if err != nil {
